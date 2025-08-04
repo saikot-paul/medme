@@ -1,0 +1,152 @@
+{
+  "agent_id": "",
+  "channel": "voice",
+  "last_modification_timestamp": 1754324826525,
+  "agent_name": "Multi-State Agent (copy)",
+  "response_engine": {
+    "type": "retell-llm",
+    "llm_id": "llm_0813030daf17c268c71d0f191fd0",
+    "version": 1
+  },
+  "language": "en-US",
+  "opt_out_sensitive_data_storage": false,
+  "opt_in_signed_url": false,
+  "version": 1,
+  "is_published": false,
+  "version_title": "",
+  "post_call_analysis_model": "gpt-4o-mini",
+  "voice_id": "11labs-Cimo",
+  "user_dtmf_options": {},
+  "retellLlmData": {
+    "llm_id": "llm_0813030daf17c268c71d0f191fd0",
+    "version": 1,
+    "model": "gpt-4o-mini",
+    "model_high_priority": false,
+    "general_prompt": "## Core Objective\nEfficiently schedule pharmacist appoints, answer questions relevant to the pharmacy and provide professional customer experience. The time currently is {{current_time}}. \n\n## Handling Challenges \n- Ask clarifying questions if information is incomplete \n\n##Scheduling Guideline \n- Confirm office hours (9AM - 5PM EST, Monday - Friday) \n- Identify appointment type: flu shot, consultation \n- Identify patient's desired time slot \n- Search for the desired time slot \n- If the desired slot does not exist provide alternate times \n\n## Ending protocol \n- Confirm with the client the date and appointment after scheduling suits them then end the chat ",
+    "general_tools": [
+      {
+        "name": "check_availability_consultation",
+        "description": "When users ask for consultation availability, check the calendar and provide available slots.",
+        "event_type_id": 2974449,
+        "cal_api_key": "cal_live_eb9c3fa36517a7a36de071ca6c0342f6",
+        "type": "check_availability_cal",
+        "timezone": "America/New_York"
+      },
+      {
+        "name": "check_availability_flu_shot",
+        "description": "When users ask for flu shot, check the calendar and provide available slots.",
+        "event_type_id": 2974501,
+        "cal_api_key": "cal_live_eb9c3fa36517a7a36de071ca6c0342f6",
+        "type": "check_availability_cal",
+        "timezone": "America/New_York"
+      },
+      {
+        "event_type_id": 2974501,
+        "cal_api_key": "cal_live_eb9c3fa36517a7a36de071ca6c0342f6",
+        "cal_fields": [
+          {
+            "name": "name",
+            "description": "attendee name",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "email",
+            "description": "attendee email",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "timezone": "America/New_York",
+        "name": "book_flu_shot",
+        "description": "When users ask to book a flu shot appointment, book it on the calendar.",
+        "location_type": "integrations:daily",
+        "type": "book_appointment_cal"
+      },
+      {
+        "event_type_id": 2974449,
+        "cal_api_key": "cal_live_eb9c3fa36517a7a36de071ca6c0342f6",
+        "cal_fields": [
+          {
+            "name": "name",
+            "description": "attendee name",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "email",
+            "description": "attendee email",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "timezone": "America/New_York",
+        "name": "book_consultation",
+        "description": "When users ask to book a consultation appointment, book it on the calendar.",
+        "location_type": "integrations:daily",
+        "type": "book_appointment_cal"
+      },
+      {
+        "name": "end_call",
+        "type": "end_call",
+        "description": "End the conversation when the user needs no more help or has no more questions."
+      },
+      {
+        "headers": {
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU"
+        },
+        "parameter_type": "json",
+        "method": "POST",
+        "query_params": {},
+        "description": "Given patient name and email get the patient bookings ",
+        "type": "custom",
+        "url": "https://b8c10f14e874.ngrok-free.app/functions/v1/cal-webhook",
+        "args_at_root": false,
+        "timeout_ms": 120000,
+        "speak_after_execution": true,
+        "name": "get_patient_bookings",
+        "response_variables": {},
+        "speak_during_execution": false,
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "patient_name": {
+              "type": "string",
+              "description": "Name of the patient."
+            },
+            "end_time": {
+              "type": "string",
+              "description": "ISO-8601 end time of the appointment."
+            },
+            "start_time": {
+              "type": "string",
+              "description": "ISO-8601 start time of the appointment."
+            },
+            "triggerEvent": {
+              "type": "string",
+              "description": "Must be exactly 'GET_BOOKINGS'. Signals that the caller wants to retrieve bookings.",
+              "enum": [
+                "GET_BOOKINGS"
+              ]
+            },
+            "patient_contact": {
+              "type": "string",
+              "description": "Patient contact information (phone or email)."
+            }
+          },
+          "required": [
+            "triggerEvent"
+          ]
+        }
+      }
+    ],
+    "states": [],
+    "start_speaker": "agent",
+    "begin_message": "Thank you for calling Real Pharmacy, how can I help you today? ",
+    "last_modification_timestamp": 1754323403132,
+    "is_published": false,
+    "knowledge_base_ids": []
+  },
+  "conversationFlow": null,
+  "llmURL": null
+}
