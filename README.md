@@ -21,7 +21,7 @@
 * Real time table update for booked appointments using webhooks
 
 ### If I had more time 
-I would ideally create a state graph or flow that maps out user intent. 
+I would ideally create a state graph or flow that maps out user intent. Additionally I would add agent tools such that booking cancellation and rescheduling can be done through conversation.
 
 ![alt text](drawio.png)
 
